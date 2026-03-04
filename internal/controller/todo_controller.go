@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"todo-app/internal/model"
+	"todo-app/internal/view"
 )
 
 type TodoServiceIF interface {
@@ -46,7 +47,13 @@ func (c *TodoController) Index(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if err := c.Tmpl.Execute(w, todos); err != nil {
+	// テンプレートが .Todos / .Today を参照するので ViewModel を渡す
+	v := view.IndexView{
+		Todos: todos,
+		Today: today.Format("2006-01-02"), // <input type="date"> の min は YYYY-MM-DD
+	}
+
+	if err := c.Tmpl.Execute(w, v); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
