@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>TODOリスト</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>TODOリスト</h1>
+
+    <!-- 追加フォーム -->
+    <form class="add-form" method="POST" action="/add">
+      <input type="text" name="title" placeholder="新しいタスクを入力..." required>
+      <input type="date" name="due" min="{{.Today}}" required>
+      <button type="submit">＋ 追加</button>
+    </form>
+
+    <!-- 未完了 -->
+    <section>
+      <div class="section-header">
+        <h2>タスク</h2>
+      </div>
+
+      <ul class="todo-list active">
+        {{range .Todos}}
+          {{if not .Completed}}
+          <li class="todo-item {{if .Expired}}expired{{end}}" data-id="{{.ID}}">
+            <div class="todo-check">
+              <input
+                type="checkbox"
+                class="toggle-checkbox"
+                data-id="{{.ID}}"
+              >
+            </div>
+
+            <div class="todo-content">
+              <div class="title editable-title" data-id="{{.ID}}">
+                {{.Title}}
+              </div>
+
+              <div class="date">
+                <span class="calendar">📅</span>
+                <span class="editable-date" data-id="{{.ID}}">
+                  {{.DueDate.Format "2006/01/02"}}
+                </span>
+              </div>
+            </div>
+
+            <button class="delete-btn" data-id="{{.ID}}">🗑️</button>
+          </li>
+          {{end}}
+        {{end}}
+      </ul>
+    </section>
+
+    <!-- 完了済み -->
+    <section>
+      <div class="section-header">
+        <h2>完了済み</h2>
+      </div>
+
+      <ul class="todo-list done">
+        {{range .Todos}}
+          {{if .Completed}}
+          <li class="todo-item" data-id="{{.ID}}">
+            <div class="todo-check">
+              <input
+                type="checkbox"
+                class="toggle-checkbox"
+                data-id="{{.ID}}"
+                checked
+              >
+            </div>
+
+            <div class="todo-content">
+              <div class="title editable-title" data-id="{{.ID}}">
+                {{.Title}}
+              </div>
+
+              <div class="date">
+                <span class="calendar">📅</span>
+                <span class="editable-date" data-id="{{.ID}}">
+                  {{.DueDate.Format "2006/01/02"}}
+                </span>
+              </div>
+            </div>
+
+            <button class="delete-btn" data-id="{{.ID}}">🗑️</button>
+          </li>
+          {{end}}
+        {{end}}
+      </ul>
+    </section>
+  </div>
+
+  <script src="/static/js/script.js"></script>
+</body>
+</html>

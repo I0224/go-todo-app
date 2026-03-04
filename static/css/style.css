@@ -1,0 +1,239 @@
+/* =========================
+   Reset / Base
+========================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #1f2937;
+}
+
+/* =========================
+   Layout / Container
+========================= */
+
+.container {
+  max-width: 520px;
+  margin: 40px auto;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================
+   Headings
+========================= */
+
+h1 {
+  text-align: center;
+  color: #469de5;
+  margin: 0 0 24px;
+}
+
+h2 {
+  font-size: 16px;
+  margin: 16px 0 8px;
+}
+
+/* =========================
+   Add Form
+========================= */
+
+.add-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.add-form input[type="text"],
+.add-form input[type="date"] {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font: inherit;
+}
+
+.add-form button {
+  padding: 0 16px;
+  border-radius: 8px;
+  border: none;
+  background: #469de5;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* =========================
+   Section
+========================= */
+
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+/* =========================
+   Todo List
+========================= */
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* =========================
+   Todo Item (Card)
+========================= */
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+
+/* =========================
+   Checkbox
+========================= */
+
+.todo-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* チェックボックスを自前で描画(appearance: none) */
+.todo-check input[type="checkbox"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  border: 1.5px solid #c7d2fe;
+  background: #ffffff;
+  cursor: pointer;
+  position: relative;
+
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+/* checked 背景 */
+.todo-check input[type="checkbox"]:checked {
+  background: #63bdf1;
+  border-color: #63bdf1;
+}
+
+/* ✓ を描く(白抜きチェック) */
+.todo-check input[type="checkbox"]::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%) scale(0);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  transition: transform 0.1s ease-out;
+}
+
+.todo-check input[type="checkbox"]:checked::after {
+  transform: translate(-50%, -55%) scale(1);
+}
+
+/* =========================
+   Todo Content (Title + Date)
+========================= */
+
+.todo-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.todo-content .title {
+  font-size: 15px;
+  color: #111827;
+  cursor: text; /* 編集できることが伝わる */
+}
+
+/* 日付：左端揃え(アイコン + テキスト) */
+.todo-content .date {
+  display: grid;
+  grid-template-columns: 16px auto;
+  column-gap: 6px;
+  align-items: center;
+
+  font-size: 12px;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+.todo-content .calendar {
+  text-align: center;
+  opacity: 0.8;
+}
+
+/* 期限切れ(Go側で expired class を付けている場合に使う) */
+.todo-item.expired .date {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+/* =========================
+   Inline Edit Input
+========================= */
+
+/* 編集中 input の見た目を周囲と揃える */
+.edit-input {
+  width: 100%;
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.4;
+
+  padding: 2px 4px;
+  margin: 0;
+
+  border: 1px solid #c7d2fe;
+  border-radius: 6px;
+  background: #eef2ff;
+
+  box-sizing: border-box;
+}
+
+/* =========================
+   Delete Button
+========================= */
+
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.4;
+}
+
+.todo-item:hover .delete-btn {
+  opacity: 0.8;
+}
+
+/* =========================
+   Done State
+========================= */
+
+.todo-list.done .title {
+  text-decoration: line-through;
+  color: #9ca3af;
+}

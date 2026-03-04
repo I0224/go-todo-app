@@ -1,0 +1,15 @@
+# database
+*.db
+
+# build
+*.exe
+*.out
+*.test
+
+# editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
